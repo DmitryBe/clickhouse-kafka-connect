@@ -1,8 +1,8 @@
 # clickhouse-kafka-connect
 
-Ingress data from kafka topic into clickhouse table (JSON format)
+Ingress data from kafka topic into clickhouse table (JSON format) with the help of kafka connect.
 
-Schema mapping is based on clickhouse table metadata
+Schema mapping is based on clickhouse table metadata.
 
 ## Quickstart
 
