@@ -1,11 +1,10 @@
-package com.grabds.kafka.clickhouse;
+package com.grabds.kafka.connect;
 
-import com.google.common.collect.Range;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import org.apache.kafka.common.config.ConfigDef;
+import com.grabds.kafka.connect.clickhouse.ClickhouseSvcImpl;
 import org.junit.Test;
 import ru.yandex.clickhouse.ClickHouseDataSource;
 import ru.yandex.clickhouse.settings.ClickHouseProperties;
@@ -13,21 +12,17 @@ import ru.yandex.clickhouse.settings.ClickHouseProperties;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertTrue;
 
 
 public class ClickhouseTest {
 
-    String serverUri = "internal-af67bdeb33cac11e8a4310671e315a7c-1771144458.ap-southeast-1.elb.amazonaws.com";
+    String serverName = "internal-af67bdeb33cac11e8a4310671e315a7c-1771144458.ap-southeast-1.elb.amazonaws.com";
     Integer serverPort = 8123;
-    String url = String.format("jdbc:clickhouse://%s:%s", serverUri, serverPort);
+    String serverUri = String.format("jdbc:clickhouse://%s:%s", serverName, serverPort);
     String dbName = "DB01";
 
 
@@ -46,7 +41,7 @@ public class ClickhouseTest {
         List<JsonObject> jsonRecs = records.stream().map(rec -> gson.fromJson(rec, JsonObject.class)).collect(Collectors.toList());
 
 
-        ClickhouseSvcImpl svc = new ClickhouseSvcImpl(url, dbName, "Table2");
+        ClickhouseSvcImpl svc = new ClickhouseSvcImpl(serverUri, dbName, "Table2");
         Integer r = svc.batchProcess(jsonRecs);
 
         assertTrue(true);
@@ -58,7 +53,7 @@ public class ClickhouseTest {
         ClickHouseProperties properties = new ClickHouseProperties();
         properties.setDatabase(dbName);
 
-        ClickHouseDataSource dataSource = new ClickHouseDataSource(url, properties);
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(serverUri, properties);
         Connection connection = dataSource.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("INSERT INTO Table1_c (UpdateDate, GeoHash, NBooked) VALUES (?, ?, ?)");

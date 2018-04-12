@@ -7,7 +7,9 @@ scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   "org.apache.kafka" % "connect-api" % "0.10.0.0" % "provided",
   "com.google.code.gson" % "gson" % "2.8.0",
+
   "ru.yandex.clickhouse" % "clickhouse-jdbc" % "0.1.39",
+
   "org.apache.logging.log4j" % "log4j-api" % "2.8.2",
   "org.apache.logging.log4j" % "log4j-core" % "2.8.2",
 

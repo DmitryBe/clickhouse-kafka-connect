@@ -1,10 +1,9 @@
-package com.grabds.kafka.clickhouse;
+package com.grabds.kafka.connect;
 
 import org.apache.kafka.connect.sink.SinkConnector;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.ConfigDef.Type;
-import org.apache.kafka.common.config.ConfigDef.Range;
 import org.apache.kafka.common.config.ConfigDef.Importance;
 
 import java.util.List;
